@@ -1,0 +1,38 @@
+{
+  "name": "vendor-backend-nodejs",
+  "version": "1.0.0",
+  "description": "Vendor Backend API for managing stores, products, and orders",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "seed": "node seed.js",
+    "test-api": "node test-api.js",
+    "test": "node test-api.js"
+  },
+  "keywords": [
+    "vendor",
+    "api",
+    "backend",
+    "nodejs",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0"
+  }
+}
