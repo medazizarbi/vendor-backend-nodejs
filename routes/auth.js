@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
   try {
     const { error } = registerSchema.validate(req.body);
     if (error) {
-      return res.status(400).json({ error: error.details[0].message });
+      return res.error(error.details[0].message, 400);
     }
 
     const { name, email, password } = req.body;
@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
     // Check if vendor already exists
     const existingVendor = await Vendor.findOne({ email });
     if (existingVendor) {
-      return res.status(400).json({ error: 'Vendor already exists with this email' });
+      return res.error('Vendor already exists with this email', 409);
     }
 
     // Create new vendor
@@ -42,11 +42,10 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign(
       { id: vendor._id },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '7d' }
+      { expiresIn: '30d' } // Longer expiry for mobile
     );
 
-    res.status(201).json({
-      message: 'Vendor registered successfully',
+    res.success({
       token,
       vendor: {
         id: vendor._id,
@@ -54,9 +53,11 @@ router.post('/register', async (req, res) => {
         email: vendor.email,
         status: vendor.status
       }
-    });
+    }, 'Vendor registered successfully');
+
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Registration error:', error);
+    res.error('Server error', 500);
   }
 });
 
